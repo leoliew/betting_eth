@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import getWeb3 from './utils/getWeb3.js'
+import Web3 from 'web3'
 import BettingContract from './contracts/Betting.json'
 import './App.css'
 
@@ -54,19 +55,20 @@ class TeamA extends Component {
 
       }).then((result) => {
         //Calling the AmountOne function of the smart-contract
-        return BettingInstance.AmountOne.call({from: accounts[0]})
+        return BettingInstance.AmountOne.call({ from: accounts[0] })
       }).then((result) => {
+        const amount = Web3.utils.fromWei(result, 'ether')
         //Then the value returned is stored in the Amount state var.
         //Divided by 10000 to convert in ether.
         this.setState({
-          Amount: result.c / 10000
+          Amount: amount
         })
       })
     })
   }
 
   handleInputChange (e) {
-    this.setState({InputAmount: e.target.value * this.state.weiConversion})
+    this.setState({ InputAmount: e.target.value * this.state.weiConversion })
   }
 
   Bet () {
@@ -98,7 +100,7 @@ class TeamA extends Component {
       Betting.deployed().then((instance) => {
         BettingInstance = instance
       }).then((result) => {
-        return BettingInstance.distributePrizes(1, {from: accounts[0]})
+        return BettingInstance.distributePrizes(1, { from: accounts[0] })
       }).catch(() => {
         console.log('Error with distributing prizes')
       })

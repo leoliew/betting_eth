@@ -17,7 +17,6 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
 // const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
@@ -43,9 +42,13 @@ module.exports = {
     // options below to some value.
     //
     development: {
-     host: "127.0.0.1",     // Localhost (default: none)
-     port: 7545,            // Standard Ethereum port (default: none)
-     network_id: "*",       // Any network (default: none)
+      host: '127.0.0.1',     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: '*',       // Any network (default: none)
+      websockets: true
+      // provider: function() {
+      //   return new HDWalletProvider(mnemonic, "http://127.0.0.1:7545/");
+      // },
     },
     // Another network with more advanced options...
     // advanced: {
@@ -103,4 +106,4 @@ module.exports = {
   db: {
     enabled: false
   }
-};
+}

@@ -93,6 +93,7 @@ contract Betting {
 
 
         //We loop through the array of winners, to give ethers to the winners
+        // TODO: 利益分配
         for (uint256 j = 0; j < count; j++) {
             // Check that the address in this fixed array is not empty
             if (winners[j] != address(0)) {

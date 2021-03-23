@@ -51,10 +51,8 @@ class App extends Component {
           <Row>
             {/* we define the two columns. The bootstrap grid is divided by 12
             parts so if we want two columns, they will take 6 parts each */}
-            {/*<Col><TeamA/> /!*We will import Team A component here *!/</Col>*/}
-            {/*<Col><TeamB/></Col>*/}
-            <Col>1 of 2</Col>
-            <Col>2 of 2</Col>
+            <Col><TeamA/> {/*We will import Team A component here */}</Col>
+            <Col><TeamB/></Col>
           </Row>
         </Container>
 

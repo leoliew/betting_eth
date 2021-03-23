@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import getWeb3 from './utils/getWeb3.js';
 import BettingContract from './contracts/Betting.json'
 import './App.css';
+import Web3 from 'web3'
 
 
 
@@ -60,8 +61,9 @@ class TeamB extends Component {
     }).then((result) => {
       //Then the value returned is stored in the Amount state var.
       //Divided by 10000 to convert in ether.
+      const amount = Web3.utils.fromWei(result, 'ether')
       this.setState({
-        Amount : result.c / 10000
+        Amount : amount
       })
     });
   })

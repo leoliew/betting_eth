@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import getWeb3 from './utils/getWeb3.js';
 import BettingContract from './contracts/Betting.json'
 import './App.css';
+import Web3 from 'web3'
 
 
 
@@ -59,8 +60,9 @@ class TeamA extends Component {
       // et on appelle la fonction BuyFirst avec ses paramètres.
       return BettingInstance.AmountOne.call({from: accounts[0]})
     }).then((result) => {
+      const amount = Web3.utils.fromWei(result, 'ether')
       this.setState({
-        Amount : result.c / 10000
+        Amount : amount
       })
     });
   })
