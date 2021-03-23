@@ -1,11 +1,11 @@
-pragma solidity >=0.4.99 <0.9.0;
+pragma solidity >=0.5.3 <0.9.0;
 
 contract Betting {
     address public owner;
     uint256 public minimumBet;
     uint256 public totalBetsOne;
     uint256 public totalBetsTwo;
-    address[] public players;
+    address []public players;
 
     struct Player {
         uint256 amountBet;
@@ -14,7 +14,7 @@ contract Betting {
     // The address of the player and => the user info
     mapping(address => Player) public playerInfo;
 
-    function() external payable {}
+    fallback() external payable {}
 
     constructor () public {
         owner = msg.sender;
@@ -22,7 +22,7 @@ contract Betting {
     }
 
     function kill() public {
-        if (msg.sender == owner) selfdestruct(msg.sender);
+        // if (msg.sender == owner) selfdestruct(msg.sender);
     }
 
     function checkPlayerExists(address player) public view returns (bool){
@@ -45,7 +45,7 @@ contract Betting {
         playerInfo[msg.sender].teamSelected = _teamSelected;
 
         //then we add the address of the player to the players array
-        players.push(msg.sender);
+        players.push(payable(msg.sender));
 
         //at the end, we increment the stakes of the team selected with the player bet
         if (_teamSelected == 1) {
@@ -57,7 +57,7 @@ contract Betting {
     }
     // Generates a number between 1 and 10 that will be the winner
     function distributePrizes(uint16 teamWinner) public {
-        address[1000] memory winners;
+        address [1000] memory winners;
         //We have to create a temporary in memory array with fixed size
         //Let's choose 1000
         uint256 count = 0;
@@ -67,16 +67,16 @@ contract Betting {
         uint256 WinnerBet = 0;
         //This will take the value of all winners bet
         address add;
-        address payable playerAddress;
+        address playerAddress;
 
         //We loop through the player array to check who selected the winner team
         for (uint256 i = 0; i < players.length; i++) {
-            address tempPlayerAddress = players[i];
+            address playerAddress = players[i];
 
             //If the player selected the winner team
             //We add his address to the winners array
             if (playerInfo[playerAddress].teamSelected == teamWinner) {
-                winners[count] = tempPlayerAddress;
+                winners[count] = playerAddress;
                 count++;
             }
         }
@@ -100,12 +100,14 @@ contract Betting {
                 add = winners[j];
                 uint256 tempBet = playerInfo[add].amountBet;
                 //Transfer the money to the user
-                address(uint160(winners[j])).transfer((tempBet * (10000 + (LoserBet * 10000 / WinnerBet))) / 10000);
+                // address(uint160(winners[j])).transfer((tempBet * (10000 + (LoserBet * 10000 / WinnerBet))) / 10000);
+                payable(winners[j]).transfer(tempBet * (LoserBet / WinnerBet));
             }
         }
         delete playerInfo[playerAddress];
         // Delete all the players
-        players.length = 0;
+        delete players;
+        // players.length = 0;
         // Delete all the players array
         LoserBet = 0;
         //reinitialize the bets
