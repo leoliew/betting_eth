@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.7.6+commit.7338295f"
+		"version": "0.8.1+commit.df193b15"
 	},
 	"language": "Solidity",
 	"output": {
@@ -110,7 +110,7 @@
 				"name": "owner",
 				"outputs": [
 					{
-						"internalType": "address",
+						"internalType": "address payable",
 						"name": "",
 						"type": "address"
 					}
@@ -220,11 +220,11 @@
 	},
 	"sources": {
 		"contracts/Betting.sol": {
-			"keccak256": "0x691c2b9f982280771e9ee10ba92db85b8dde03370e3cc79fb6a8441490c40e1b",
+			"keccak256": "0x8a7aeb3a4bbbb3f4025bba1c7ef05efd7329ac73a131f02e0ce91141f1650766",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://535f74df46baea6354ab53247e528d5fe655c08f926ce008f321042f0a719938",
-				"dweb:/ipfs/QmRybn8JJh1WTzAg3jXoWNGHi7CWsnEjmSVvf49qXcz1pb"
+				"bzz-raw://d707e0210066dbf5ab4b2165a6557f6258bc2706ed337d343da5378a8b4bb103",
+				"dweb:/ipfs/QmUdH2tEJp32cRAvprtYi29MriAe589cnW2ub9nQ18A2iZ"
 			]
 		}
 	},

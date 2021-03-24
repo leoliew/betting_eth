@@ -2,7 +2,7 @@
 pragma solidity >=0.5.3 <0.9.0;
 
 contract Betting {
-    address public owner;
+    address payable public owner;
     uint256 public minimumBet;
     uint256 public totalBetsOne;
     uint256 public totalBetsTwo;
@@ -15,6 +15,7 @@ contract Betting {
     // The address of the player and => the user info
     mapping(address => Player) public playerInfo;
 
+
     fallback() external payable {
         // custom function code
     }
@@ -24,12 +25,12 @@ contract Betting {
     }
 
     constructor () {
-        owner = msg.sender;
+        owner = payable(msg.sender);
         minimumBet = 100000000000000;
     }
 
     function kill() public {
-        // if (msg.sender == owner) selfdestruct(msg.sender);
+       if (msg.sender == owner) selfdestruct(owner);
     }
 
     function checkPlayerExists(address player) public view returns (bool){
@@ -108,7 +109,7 @@ contract Betting {
                 uint256 tempBet = playerInfo[add].amountBet;
                 //Transfer the money to the user
                 // address(uint160(winners[j])).transfer((tempBet * (10000 + (LoserBet * 10000 / WinnerBet))) / 10000);
-                payable(winners[j]).transfer(tempBet * (LoserBet / WinnerBet));
+                payable(winners[j]).transfer(tempBet +  (LoserBet *  (tempBet / WinnerBet)));
             }
         }
         // Delete all the players
