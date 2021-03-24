@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.5.3 <0.9.0;
 
 contract Betting {
@@ -14,9 +15,15 @@ contract Betting {
     // The address of the player and => the user info
     mapping(address => Player) public playerInfo;
 
-    fallback() external payable {}
+    fallback() external payable {
+        // custom function code
+    }
 
-    constructor () public {
+    receive() external payable {
+        // custom function code
+    }
+
+    constructor () {
         owner = msg.sender;
         minimumBet = 100000000000000;
     }
@@ -40,7 +47,7 @@ contract Betting {
         //Higher than the minimum value
         require(msg.value >= minimumBet);
 
-        //We set the player informations : amount of the bet and selected team
+        //We set the player info : amount of the bet and selected team
         playerInfo[msg.sender].amountBet = msg.value;
         playerInfo[msg.sender].teamSelected = _teamSelected;
 
@@ -71,12 +78,12 @@ contract Betting {
 
         //We loop through the player array to check who selected the winner team
         for (uint256 i = 0; i < players.length; i++) {
-            address playerAddress = players[i];
+            address tempPlayerAddress = players[i];
 
             //If the player selected the winner team
             //We add his address to the winners array
-            if (playerInfo[playerAddress].teamSelected == teamWinner) {
-                winners[count] = playerAddress;
+            if (playerInfo[tempPlayerAddress].teamSelected == teamWinner) {
+                winners[count] = tempPlayerAddress;
                 count++;
             }
         }
@@ -104,11 +111,11 @@ contract Betting {
                 payable(winners[j]).transfer(tempBet * (LoserBet / WinnerBet));
             }
         }
-        delete playerInfo[playerAddress];
         // Delete all the players
+        delete playerInfo[playerAddress];
+        // Delete all the players array
         delete players;
         // players.length = 0;
-        // Delete all the players array
         LoserBet = 0;
         //reinitialize the bets
         WinnerBet = 0;
