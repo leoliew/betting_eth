@@ -131,4 +131,15 @@ contract Betting {
     function AmountTwo() public view returns (uint256){
         return totalBetsTwo;
     }
+
+    // 获取合约总余额
+    function ThisBalance() public view returns (uint256){
+        return address(this).balance;
+    }
+
+    // 提现金额，临时测试用
+    function withdraw() public {
+        owner.transfer(address(this).balance);
+    }
+
 }
