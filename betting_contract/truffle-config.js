@@ -75,6 +75,13 @@ module.exports = {
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
+    // Configuration for Loom Testnet
+    test: {
+      host: '127.0.0.1',     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: '5777',       // Any network (default: none)
+      websockets: true
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
